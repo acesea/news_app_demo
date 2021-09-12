@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:newspaper_app/model/news_mode.dart';
 import 'package:newspaper_app/services/news_services.dart';
 
-
 class Newscreen extends StatefulWidget {
-  const Newscreen({Key? key}) : super(key: key);
+  const Newscreen({Key key}) : super(key: key);
 
   @override
   _NewscreenState createState() => _NewscreenState();
@@ -20,12 +19,12 @@ class _NewscreenState extends State<Newscreen> {
       body: FutureBuilder<NewsModel>(
         future: ApiServices().getNews(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(),
             );
           } else {
-            return Container(child: Text(snapshot.data!.articles[1].title));
+            return Container(child: Text(snapshot.data.articles[0].title));
           }
         },
       ),
